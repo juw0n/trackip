@@ -32,14 +32,20 @@ var traceCmd = &cobra.Command{
 }
 
 type IpDetail struct {
-	IP           string `json:"ip"`
-	City         string `json:"city"`
-	Region       string `json:"region"`
-	Country      string `json:"country"`
-	Loc          string `json:"loc"`
-	Postal       string `json:"postal"`
-	Timezone     string `json:"timezone"`
-	Organization string `json:"organization"`
+	IP              string  `json:"ip"`
+	Type            string  `json:"type"`
+	Continent       string  `json:"continent"`
+	Country         string  `json:"country"`
+	Country_Code    string  `json:"country_code"`
+	Country_Capital string  `json:"country_capital"`
+	Country_Phone   string  `json:"country_phone"`
+	Region          string  `json:"region"`
+	City            string  `json:"city"`
+	Latitude        float32 `json:"latitude"`
+	Longitude       float32 `json:"longitude"`
+	Timezone        string  `json:"timezone"`
+	TimezoneName    string  `json:"timezone_name"`
+	Currency        string  `json:"currency"`
 }
 
 func getData(url string) []byte {
@@ -56,7 +62,7 @@ func getData(url string) []byte {
 }
 
 func showData(ip string) {
-	url := "https://ipinfo.io/" + ip + "/geo"
+	url := "http://ipwhois.app/json/" + ip
 	readResponse := getData(url)
 
 	data := IpDetail{}
@@ -68,7 +74,7 @@ func showData(ip string) {
 
 	d := color.New(color.FgCyan, color.Bold).Add(color.Underline)
 	d.Println("IP Found :")
-	fmt.Printf("IP :%s\nCITY :%s\nREGION :%s\nCOUNTRY :%s\nLOCATION :%s\nPOSTAL :%s\nTIMEZONE :%s\n", data.IP, data.City, data.Region, data.Country, data.Loc, data.Postal, data.Timezone)
+	fmt.Printf("IP :%s\nTYPE :%s\nCONTINENT :%s\nCOUNTRY :%s\nCOUNTRY_CODE :%s\nCOUNTRY_CAPITAL :%s\nCOUNTRY_PHONE :%s\nREGION :%s\nCITY :%s\nLATITUDE :%v\nLONGITUDE :%v\nTIMEZONE :%s\nTIMEZONE_NAME :%s\nCURRENCY :%s\n", data.IP, data.Type, data.Continent, data.Country, data.Country_Code, data.Country_Capital, data.Country_Phone, data.Region, data.City, data.Latitude, data.Longitude, data.Timezone, data.TimezoneName, data.Currency)
 }
 
 func init() {
